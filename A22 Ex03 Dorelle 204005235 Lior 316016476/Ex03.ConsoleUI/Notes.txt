@@ -1,0 +1,5 @@
+﻿1. Fix Refuel Func.
+2. Fix Prints.
+3. Make an exit point from anywehere.
+4. Overhaul the code formating.
+5. Check the functionallty of the program.
