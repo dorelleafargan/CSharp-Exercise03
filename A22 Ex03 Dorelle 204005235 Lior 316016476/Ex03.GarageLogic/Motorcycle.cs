@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
@@ -11,8 +8,9 @@ namespace Ex03.GarageLogic
         A = 1,
         A2 = 2,
         AA = 3,
-        B = 4
+        B = 4,
     }
+
     public abstract class Motorcycle : Vehicle
     {
         private const int k_NumberOfWheels = 2;
@@ -20,32 +18,33 @@ namespace Ex03.GarageLogic
         private eLicenseType m_LicenseType;
         private int m_EngineVolume;
 
-
-        public Motorcycle(string i_ModelName, string i_LicenseNumber)
+        protected Motorcycle(string i_ModelName, string i_LicenseNumber)
             : base(i_ModelName, i_LicenseNumber)
         {
-
         }
-        public eLicenseType LicenseType
+
+        internal eLicenseType LicenseType
         {
             get { return m_LicenseType; }
             set { m_LicenseType = value; }
         }
 
-        public int EngineVolume
+        internal int EngineVolume
         {
             get { return m_EngineVolume; }
             set { m_EngineVolume = value; }
         }
 
-        public override void NewWheels(string i_Manufacturer, float i_CurrentTirePressure)
+        internal override void NewWheels(string i_Manufacturer, float i_CurrentTirePressure)
         {
             SetWheels(i_Manufacturer, i_CurrentTirePressure, k_MaxTirePressure, k_NumberOfWheels);
         }
+
         public override float MaxWheelTirePressure()
         {
             return k_MaxTirePressure;
         }
+
         public override string ToString()
         {
             StringBuilder infoStringBuilder = new StringBuilder(base.ToString());

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Ex03.GarageLogic;
 
 namespace Ex03.ConsoleUI
@@ -23,13 +19,13 @@ namespace Ex03.ConsoleUI
         private readonly VehicleCreator r_VehicleCreator;
         private readonly GarageManager r_GarageManager;
 
-        public InsertVehicleUI(VehicleCreator i_VehicleCreator, GarageManager i_GarageManager)
+        internal InsertVehicleUI(VehicleCreator i_VehicleCreator, GarageManager i_GarageManager)
         {
             r_VehicleCreator = i_VehicleCreator;
             r_GarageManager = i_GarageManager;
         }
 
-        public void InsertNewVehicle()
+        internal void InsertNewVehicle()
         {
             Console.WriteLine(string.Format("Vehicle add menu:{0}", Environment.NewLine));
 
@@ -82,7 +78,7 @@ namespace Ex03.ConsoleUI
 
                     case eVehicleType.Truck:
                         {
-                            bool isRefrigirated = IsCargoRefrigirated();
+                            bool isRefrigirated = isCargoRefrigirated();
                             float volumeOfCargo = floatInputValidation(k_VolumeOfCargoMessage);
                             newVehicle = r_VehicleCreator.CreateVehicle(vehicleType, engineType, licenseNumber, vehicleModel);
                             r_VehicleCreator.SetTruckAttributes(newVehicle as Truck, isRefrigirated, volumeOfCargo);
@@ -108,7 +104,7 @@ namespace Ex03.ConsoleUI
                         currentWheelsAirPressure);
 
                     r_GarageManager.AddVehicle(ownerName, ownersPhoneNumber, newVehicle);
-                    Console.WriteLine(string.Format("{0}, License Number {1} was added to the garage", vehicleModel ,licenseNumber));
+                    Console.WriteLine(string.Format("{0}, License Number {1} was added to the garage", vehicleModel, licenseNumber));
                 }
                 catch (ValueOutOfRangeException ex)
                 {
@@ -123,15 +119,17 @@ namespace Ex03.ConsoleUI
 
         private string stringInputValidation(string i_StringName)
         {
-            Console.WriteLine(string.Format("Please enter the {0} (not empty)", i_StringName));
+            Console.WriteLine(string.Format("{1}Please enter the {0}:", i_StringName, Environment.NewLine));
             string stringInput = Console.ReadLine();
             while (string.IsNullOrEmpty(stringInput))
             {
                 Console.WriteLine(string.Format("{0} cannot be empty, Please try again:", i_StringName));
                 stringInput = Console.ReadLine();
             }
+
             return stringInput;
         }
+
         private float floatInputValidation(string i_NameOfObjectString, float i_MaxValue = 0)
         {
             string maxValueString = string.Empty;
@@ -145,7 +143,7 @@ namespace Ex03.ConsoleUI
                 i_MaxValue = float.MaxValue;
             }
 
-            Console.WriteLine(string.Format("Please enter the amount of {0}{1} (Non Negative):", i_NameOfObjectString, maxValueString));
+            Console.WriteLine(string.Format("Please enter the amount of {0}{1}:", i_NameOfObjectString, maxValueString));
             string floatInput = Console.ReadLine();
             float floatToReturn;
 
@@ -177,10 +175,11 @@ namespace Ex03.ConsoleUI
         {
             eVehicleType vehicleType;
 
-            Console.WriteLine(string.Format(@"Please choose one of the following options:
+            Console.WriteLine(string.Format(
+                @"{0}Please choose one of the following options:
 1. Car
 2. Motorcycle
-3. Truck"));
+3. Truck", Environment.NewLine));
 
             string vehicleTypeInput = Console.ReadLine();
 
@@ -198,7 +197,8 @@ namespace Ex03.ConsoleUI
         {
             eEngineType engineType;
 
-            Console.WriteLine(string.Format(@"Please choose one of the following options:
+            Console.WriteLine(string.Format(
+                @"Please choose one of the following options:
 1. Fuel
 2. Electric"));
 
@@ -245,7 +245,8 @@ namespace Ex03.ConsoleUI
         {
             ePaintJobColor carColor;
 
-            Console.WriteLine(string.Format(@"Please enter a color from the following options:
+            Console.WriteLine(string.Format(
+                @"Please enter a color from the following options:
 1. Red
 2. White
 3. Black
@@ -266,7 +267,8 @@ namespace Ex03.ConsoleUI
         {
             eNumberOfDoors numberOfDoors;
 
-            Console.WriteLine(string.Format(@"Please enter the number of doors from the following options:
+            Console.WriteLine(string.Format(
+                @"Please enter the number of doors from the following options:
 2
 3
 4
@@ -288,7 +290,8 @@ namespace Ex03.ConsoleUI
         {
             eLicenseType licenseType;
 
-            Console.WriteLine(string.Format(@"Please enter the license type from the following options:
+            Console.WriteLine(string.Format(
+                @"Please enter the license type from the following options:
 1. A
 2. A2
 3. AA
@@ -308,7 +311,7 @@ namespace Ex03.ConsoleUI
 
         private int motorcyclEngineVolumeInput()
         {
-            Console.WriteLine("Please enter engine volume (Non negative):");
+            Console.WriteLine("Please enter engine volume:");
             string engineVolumeInput = Console.ReadLine();
             int engineVolume;
 
@@ -336,22 +339,22 @@ namespace Ex03.ConsoleUI
             return engineVolume;
         }
 
-        private bool IsCargoRefrigirated()
+        private bool isCargoRefrigirated()
         {
             Console.WriteLine(string.Format(@"Does the truck have a refrigrated cargo?
 1. Yes
 2. No"));
-            string IsCargoRefrigiratedInput = Console.ReadLine();
+            string isCargoRefrigiratedInput = Console.ReadLine();
 
-            while (IsCargoRefrigiratedInput != "1" && IsCargoRefrigiratedInput != "2")
+            while (isCargoRefrigiratedInput != "1" && isCargoRefrigiratedInput != "2")
             {
                 Console.WriteLine(string.Format(@"Invalid input, Please pick one of the following options:
 1. Yes
 2. No"));
-                IsCargoRefrigiratedInput = Console.ReadLine();
+                isCargoRefrigiratedInput = Console.ReadLine();
             }
 
-            return IsCargoRefrigiratedInput == "1";
+            return isCargoRefrigiratedInput == "1";
         }
 
         private bool isInRange(float i_Number, float i_MinInRange, float i_MaxInRange)
@@ -360,4 +363,3 @@ namespace Ex03.ConsoleUI
         }
     }
 }
-

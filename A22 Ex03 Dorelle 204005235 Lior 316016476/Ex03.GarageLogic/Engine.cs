@@ -1,40 +1,47 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
+    public enum eFuelType
+    {
+        Octane98 = 1,
+        Octane96 = 2,
+        Octan95 = 3,
+        Soler = 4,
+    }
+
     public enum eEngineType
     {
         FuelBased = 1,
-        ElectricBased = 2
+        ElectricBased = 2,
     }
 
-    public class Engine 
+    internal class Engine 
     {
         private readonly float r_MaxAmountOfEnergy;
         private readonly eEngineType r_EngineType;
         private float m_CurrentAmountOfEnergy;
         private eFuelType m_FuelType;
-        public Engine(eEngineType i_EngineType, float i_MaxAmountOfEnergy)
+
+        internal Engine(eEngineType i_EngineType, float i_MaxAmountOfEnergy)
         {
             r_MaxAmountOfEnergy = i_MaxAmountOfEnergy;
             r_EngineType = i_EngineType;
         }
 
-        public float MaxAmountOfEnergy
+        internal float MaxAmountOfEnergy
         {
             get { return r_MaxAmountOfEnergy;}
         }
-        public eEngineType EngineType
+
+        internal float CurrentAmountOfEnergy
         {
-            get { return r_EngineType; }
-        }
-        public float CurrentAmountOfEnergy
-        {
-            get { return m_CurrentAmountOfEnergy; }
+            get
+            {
+                return m_CurrentAmountOfEnergy;
+            }
+
             set
             {
                 if (r_MaxAmountOfEnergy >= value && value >= 0)
@@ -47,10 +54,11 @@ namespace Ex03.GarageLogic
                 }
             }
         }
-        public eFuelType FuelType
+
+        internal eFuelType FuelType
         {
-            get 
-            { 
+            get
+            {
                 if(r_EngineType == eEngineType.FuelBased)
                 {
                     return m_FuelType;
@@ -60,7 +68,9 @@ namespace Ex03.GarageLogic
                     throw new ArgumentException("Electric engine has no fuel type.");
                 }
             }
-            set {
+
+            set
+            {
                 if (r_EngineType == eEngineType.FuelBased)
                 {
                     m_FuelType = value;
@@ -72,7 +82,7 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public void ReEnergize(float i_UnitAmount)
+        private void reEnergize(float i_UnitAmount)
         {
             if (m_CurrentAmountOfEnergy + i_UnitAmount <= r_MaxAmountOfEnergy && i_UnitAmount >= 0)
             {
@@ -83,11 +93,12 @@ namespace Ex03.GarageLogic
                 throw new ValueOutOfRangeException(0, r_MaxAmountOfEnergy);
             }
         }
-        public void Refuel(float i_FuelAmountToAdd, eFuelType i_FuelType)
+
+        internal void Refuel(float i_FuelAmountToAdd, eFuelType i_FuelType)
         {
             if (r_EngineType != eEngineType.FuelBased)
             {
-                throw new ArgumentException("Can't fuel electric based engine");
+                throw new ArgumentException("Can't fuel electric based engine.");
             }
             else if (m_FuelType != i_FuelType)
             {
@@ -95,15 +106,15 @@ namespace Ex03.GarageLogic
             }
             else
             {
-                ReEnergize(i_FuelAmountToAdd);
+                reEnergize(i_FuelAmountToAdd);
             }
         }
 
-        public void Recharge(float i_HoursAmountTORecharge)
+        internal void Recharge(float i_HoursAmountTORecharge)
         {
             if (r_EngineType == eEngineType.ElectricBased)
             {
-                ReEnergize(i_HoursAmountTORecharge);
+                reEnergize(i_HoursAmountTORecharge);
             }
             else
             {
@@ -122,12 +133,15 @@ namespace Ex03.GarageLogic
                     {
                         engineInfoStringBuilder.Append(string.Format("Fuel Type: {0}{1}", m_FuelType, Environment.NewLine));
                         engineInfoStringBuilder.Append(string.Format("Max Fuel (Liters): {0}{1}", r_MaxAmountOfEnergy, Environment.NewLine));
+                        engineInfoStringBuilder.Append(string.Format("Fuel left (Liters): {0}{1}", m_CurrentAmountOfEnergy, Environment.NewLine));
                         break;
                     }
 
                 case eEngineType.ElectricBased:
                     {
-                        engineInfoStringBuilder.Append(string.Format("Max Battery (Hours): {0}{1}", m_CurrentAmountOfEnergy, Environment.NewLine));
+                        engineInfoStringBuilder.Append(string.Format("Max Battery (Hours): {0}{1}", r_MaxAmountOfEnergy, Environment.NewLine));
+                        engineInfoStringBuilder.Append(string.Format("Recharge Left in Battery (Hours): {0}{1}", m_CurrentAmountOfEnergy, Environment.NewLine));
+
                         break;
                     }
             }

@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
     public class GarageManager
     {
         private readonly Dictionary<string, Vehicle> r_GargeVehiclesDicitonary;
+
         public GarageManager()
         {
             r_GargeVehiclesDicitonary = new Dictionary<string, Vehicle>();
@@ -42,7 +42,8 @@ namespace Ex03.GarageLogic
 
         public string GetVehicleLicneseNumberByStatus(eRepairStatus i_RepairStatus)
         {
-            StringBuilder LicenseNumberStringBuilder = new StringBuilder(string.Format(@"Vehicles With Status:
+            StringBuilder LicenseNumberStringBuilder = new StringBuilder(string.Format(
+                @"{1}Vehicles With Status:
 {0} {1}", i_RepairStatus, Environment.NewLine));
             List<string> VehiclesWithRepairStatus = r_GargeVehiclesDicitonary.Values.
                 Where(vehicle => vehicle.RepairStatus == i_RepairStatus)
@@ -56,6 +57,7 @@ namespace Ex03.GarageLogic
         {
             return r_GargeVehiclesDicitonary[i_LicenseNumber].EnergyLevel;
         }
+
         public float GetMaxAmountOfEnergyLevel(string i_LicenseNumber)
         {
             return r_GargeVehiclesDicitonary[i_LicenseNumber].MaxEngineFuelCapcity();
@@ -65,6 +67,7 @@ namespace Ex03.GarageLogic
         {
             return r_GargeVehiclesDicitonary[i_LicenseNumber].ToString();
         }
+
         public void ChangeVehicleRepairStatus(string i_LicenseNumber, eRepairStatus i_RepairStatus)
         {
             r_GargeVehiclesDicitonary[i_LicenseNumber].RepairStatus = i_RepairStatus;

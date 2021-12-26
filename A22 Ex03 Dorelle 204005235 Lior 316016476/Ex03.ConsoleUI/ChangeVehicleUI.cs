@@ -1,53 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Ex03.GarageLogic;
 
 namespace Ex03.ConsoleUI
 {
     internal class ChangeVehicleUI
     {
-        private enum eVehicleChangeOptions
+        private enum eChangeVehicleMenuOptions
         {
             ChangeStatus = 1,
             InflateTires = 2,
             Refuel = 3,
             Recharge = 4,
-            MainMenu = 5
+            MainMenu = 5,
         }
 
-        private const string k_FuelMessage = "fuel (Liters)";
-        private const string k_BatteryEnergyMessage = "hours";
+        private const string k_FuelMessage = "Fuel capacity (Liters)";
+        private const string k_BatteryEnergyMessage = "Hours";
         private readonly GarageManager r_GarageManager;
         private readonly VehicleInfoUI r_InfoVehicleUi;
 
-        public ChangeVehicleUI(GarageManager i_GarageManager, VehicleInfoUI i_InfoVehicleUi)
+        internal ChangeVehicleUI(GarageManager i_GarageManager, VehicleInfoUI i_VehicleInfoUI)
         {
             r_GarageManager = i_GarageManager;
-            r_InfoVehicleUi = i_InfoVehicleUi;
+            r_InfoVehicleUi = i_VehicleInfoUI;
         }
 
-        public void ChangeVehicleMenu()
+        internal void ChangeVehicleMenu()
         {
             bool isChangeMenu = true;
             string licenseNumber;
 
             while (isChangeMenu)
             {
-                Console.WriteLine(string.Format("Change menu:{0}", Environment.NewLine));
+                Console.WriteLine(string.Format("Change Vehicle Information menu:{0}", Environment.NewLine));
 
-                eVehicleChangeOptions changeOptions = getEngineChangeOption();
+                eChangeVehicleMenuOptions changeOptions = changeVehicleInfoMenu();
 
                 switch (changeOptions)
                 {
-                    case eVehicleChangeOptions.ChangeStatus:
+                    case eChangeVehicleMenuOptions.ChangeStatus:
                         {
                             try
                             {
                                 licenseNumber = r_InfoVehicleUi.VehicleLicenseNumberInput();
-                                eRepairStatus repairStatus = r_InfoVehicleUi.GetVehicleRepairStatusFromInput();
+                                eRepairStatus repairStatus = r_InfoVehicleUi.VehicleRepairStatusInput();
                                 r_GarageManager.ChangeVehicleRepairStatus(licenseNumber, repairStatus);
                             }
                             catch (ArgumentNullException ex)
@@ -62,7 +59,7 @@ namespace Ex03.ConsoleUI
                             break;
                         }
 
-                    case eVehicleChangeOptions.InflateTires:
+                    case eChangeVehicleMenuOptions.InflateTires:
                         {
                             try
                             {
@@ -85,17 +82,16 @@ namespace Ex03.ConsoleUI
                             break;
                         }
 
-                    case eVehicleChangeOptions.Refuel:
+                    case eChangeVehicleMenuOptions.Refuel:
                         {
                             try
                             {
                                 licenseNumber = r_InfoVehicleUi.VehicleLicenseNumberInput();
-                                eFuelType fuelType = getFuelTypeFromInput();
+                                eFuelType fuelType = fuelTypeInput();
 
                                 float currentFillPercent = r_GarageManager.GetEnergyPrecnetage(licenseNumber);
                                 float maxFillAmount = r_GarageManager.GetMaxAmountOfEnergyLevel(licenseNumber);
-
-                                float amountOfEnergyToFill = getAmountEnergyToAddFromInput(k_FuelMessage, currentFillPercent, maxFillAmount);
+                                float amountOfEnergyToFill = amountOfEnergyToAddInput(k_FuelMessage, currentFillPercent, maxFillAmount);
                                 r_GarageManager.FuelVehicle(licenseNumber, fuelType, amountOfEnergyToFill);
                             }
                             catch (ArgumentNullException ex)
@@ -119,7 +115,7 @@ namespace Ex03.ConsoleUI
                             break;
                         }
 
-                    case eVehicleChangeOptions.Recharge:
+                    case eChangeVehicleMenuOptions.Recharge:
                         {
                             try
                             {
@@ -127,7 +123,7 @@ namespace Ex03.ConsoleUI
                                 float currentFillPercent = r_GarageManager.GetEnergyPrecnetage(licenseNumber);
                                 float maxFillAmount = r_GarageManager.GetMaxAmountOfEnergyLevel(licenseNumber);
 
-                                float amountOfEnergyToFill = getAmountEnergyToAddFromInput(k_BatteryEnergyMessage, currentFillPercent, maxFillAmount);
+                                float amountOfEnergyToFill = amountOfEnergyToAddInput(k_BatteryEnergyMessage, currentFillPercent, maxFillAmount);
                                 r_GarageManager.RechargeVehicle(licenseNumber, amountOfEnergyToFill / 60f);
                             }
                             catch (ArgumentNullException ex)
@@ -150,7 +146,7 @@ namespace Ex03.ConsoleUI
                             break;
                         }
 
-                    case eVehicleChangeOptions.MainMenu:
+                    case eChangeVehicleMenuOptions.MainMenu:
                         {
                             isChangeMenu = false;
                             break;
@@ -164,27 +160,27 @@ namespace Ex03.ConsoleUI
             }
         }
 
-        private eVehicleChangeOptions getEngineChangeOption()
+        private eChangeVehicleMenuOptions changeVehicleInfoMenu()
         {
-            eVehicleChangeOptions changeOption;
+            eChangeVehicleMenuOptions changeOption;
 
             Console.WriteLine(string.Format(@"Please choose one of the following options:
-1. Change a vehicle's status
-2. Inflate a vehicle's tires
-3. Refuel a vehicle's engine
-4. Recharge a vehicle's electric engine
+1. Change Repair status
+2. Inflate tires
+3. Refuel engine
+4. Recharge electric engine
 5. Return to main menu"));
 
             string optionInput = Console.ReadLine();
 
             while (!Enum.TryParse(optionInput, out changeOption) ||
-                   !Enum.IsDefined(typeof(eVehicleChangeOptions), changeOption))
+                   !Enum.IsDefined(typeof(eChangeVehicleMenuOptions), changeOption))
             {
                 Console.WriteLine(string.Format(@"Invalid option, Please try again:
-1. Change a vehicle's status
-2. Inflate a vehicle's tires
-3. Refuel a vehicle's engine
-4. Recharge a vehicle's electric engine
+1. Change Repair status
+2. Inflate tires
+3. Refuel engine
+4. Recharge electric engine
 5. Return to main menu"));
 
                 optionInput = Console.ReadLine();
@@ -193,15 +189,15 @@ namespace Ex03.ConsoleUI
             return changeOption;
         }
 
-        private eFuelType getFuelTypeFromInput()
+        private eFuelType fuelTypeInput()
         {
             eFuelType fuelType;
 
             Console.WriteLine(string.Format(@"Please choose one of the below fuel types:
-1. Soler
-2. Octane95
-3. Octane96
-4. Octane98"));
+1. Octane98
+2. Octane96
+3. Octane95
+4. Soler"));
 
             string fuelTypeInput = Console.ReadLine();
 
@@ -209,10 +205,10 @@ namespace Ex03.ConsoleUI
                    !Enum.IsDefined(typeof(eFuelType), fuelType))
             {
                 Console.WriteLine(string.Format(@"Invalid option fuel type, Please try again:
-1. Soler
-2. Octane95
-3. Octane96
-4. Octane98"));
+1. Octane98
+2. Octane96
+3. Octane95
+4. Soler"));
 
                 fuelTypeInput = Console.ReadLine();
             }
@@ -220,16 +216,16 @@ namespace Ex03.ConsoleUI
             return fuelType;
         }
 
-        private float getAmountEnergyToAddFromInput(string i_ObjectToAddName, float i_CurrentFillPercent, float i_MaxAmount)
+        private float amountOfEnergyToAddInput(string i_ObjectToAddName, float i_CurrentFillPercent, float i_MaxAmount)
         {
-            Console.WriteLine(string.Format("Current {0} fill percent: {1}%, Max {0} amount: {2}", i_ObjectToAddName, i_CurrentFillPercent, i_MaxAmount));
+            Console.WriteLine(string.Format("Current {0} percent: {1}%, Max {0} amount: {2}", i_ObjectToAddName, i_CurrentFillPercent, i_MaxAmount));
 
             if (i_ObjectToAddName == k_BatteryEnergyMessage)
             {
                 i_ObjectToAddName = "minutes";
             }
 
-            Console.WriteLine(string.Format("Please enter the amount of {0} to add (Non negative):", i_ObjectToAddName));
+            Console.WriteLine(string.Format("Please enter {0} to add:", i_ObjectToAddName));
 
             string amountInput = Console.ReadLine();
             float amountToAdd;
@@ -244,11 +240,10 @@ namespace Ex03.ConsoleUI
             catch (FormatException ex)
             {
                 Console.WriteLine(ex.Message);
-                amountToAdd = getAmountEnergyToAddFromInput(i_ObjectToAddName, i_CurrentFillPercent, i_MaxAmount);
+                amountToAdd = amountOfEnergyToAddInput(i_ObjectToAddName, i_CurrentFillPercent, i_MaxAmount);
             }
 
             return amountToAdd;
         }
     }
 }
-

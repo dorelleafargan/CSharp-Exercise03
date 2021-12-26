@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
@@ -13,30 +10,33 @@ namespace Ex03.GarageLogic
         private bool m_IsCargoRefrigerated = false;
         private float m_CargoVolume = 0f;
 
-        public Truck(string i_ModelName, string i_LicenseNumber)
+        protected Truck(string i_ModelName, string i_LicenseNumber)
             : base(i_ModelName, i_LicenseNumber)
         {
-
         }
-        public bool IsContentRefgirated
+
+        internal bool IsContentRefgirated
         {
             get { return m_IsCargoRefrigerated; }
             set { m_IsCargoRefrigerated = value; }
         }
 
-        public float CargoVolume
+        internal float CargoVolume
         {
             get { return m_CargoVolume; }
             set { m_CargoVolume = value; }
         }
-        public override void NewWheels(string i_Manufacturer, float i_CurrentTirePressure)
+
+        internal override void NewWheels(string i_Manufacturer, float i_CurrentTirePressure)
         {
             SetWheels(i_Manufacturer, i_CurrentTirePressure, k_MaxTirePressure, k_NumberOfWheels);
         }
+
         public override float MaxWheelTirePressure()
         {
             return k_MaxTirePressure;
         }
+
         public override string ToString()
         {
             StringBuilder infoStringBuilder = new StringBuilder(base.ToString());

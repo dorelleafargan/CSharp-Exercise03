@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Ex03.GarageLogic;
+﻿using Ex03.GarageLogic;
+using System;
 
 namespace Ex03.ConsoleUI
 {
@@ -14,11 +10,12 @@ namespace Ex03.ConsoleUI
         private readonly InsertVehicleUI r_InsertVehicleUI;
         private readonly ChangeVehicleUI r_ChangeVehicleUI;
         private readonly VehicleInfoUI r_VehicleInfoUI;
+
         private enum eOptions
         {
             InsertVehicle = 1,
             ChangeVehicle = 2,
-            VehicleInfo =3
+            VehicleInfo = 3,
         }
 
         public GarageHandler()
@@ -29,6 +26,7 @@ namespace Ex03.ConsoleUI
             r_VehicleInfoUI = new VehicleInfoUI(r_GarageManager);
             r_ChangeVehicleUI = new ChangeVehicleUI(r_GarageManager, r_VehicleInfoUI);
         }
+
         public void Run()
         {
             Console.WriteLine(string.Format("Welcome to Elayev-Afargan and Sons. {0}", Environment.NewLine));
@@ -53,15 +51,17 @@ namespace Ex03.ConsoleUI
 "));
                 optionsInput = Console.ReadLine();
             }
+
             return garageOption;
         }
+
         private void garageMenu()
         {
             while (true)
             {
                 Console.WriteLine(string.Format("Main Menu:{0}", Environment.NewLine));
                 eOptions garageOption = getInput();
-                switch (garageOption) 
+                switch (garageOption)
                 {
                     case eOptions.InsertVehicle:
                         {
@@ -80,8 +80,8 @@ namespace Ex03.ConsoleUI
                             r_VehicleInfoUI.VehicleInfoMenu();
                             break;
                         }
-                        
-                        default:
+
+                    default:
                         {
                             break;
                         }

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Ex03.GarageLogic;
 
 namespace Ex03.ConsoleUI
@@ -14,19 +12,19 @@ namespace Ex03.ConsoleUI
             GetVehicleInfo = 1,
             GetAllVehiclesLicensesWithRepairStatus = 2,
             GetAllVehiclesLicenses = 3,
-            MainMenu = 4
+            MainMenu = 4,
         }
 
         private readonly GarageManager r_GarageManager;
 
-        public VehicleInfoUI(GarageManager i_GarageManager)
+        internal VehicleInfoUI(GarageManager i_GarageManager)
         {
             r_GarageManager = i_GarageManager;
         }
 
-        public void VehicleInfoMenu()
+        internal void VehicleInfoMenu()
         {
-            Console.WriteLine(string.Format("{0}Info menu:{1}", Environment.NewLine, Environment.NewLine));
+            Console.WriteLine(string.Format(@"{0}Info menu:{1}", Environment.NewLine, Environment.NewLine));
 
             eVehicleInfoOptions infoOption = vehicleInfoOptionInput();
 
@@ -53,7 +51,7 @@ namespace Ex03.ConsoleUI
 
                 case eVehicleInfoOptions.GetAllVehiclesLicensesWithRepairStatus:
                     {
-                        eRepairStatus repairStatus = GetVehicleRepairStatusFromInput();
+                        eRepairStatus repairStatus = VehicleRepairStatusInput();
 
                         string vehiclesWithRepairStatusString = r_GarageManager.GetVehicleLicneseNumberByStatus(repairStatus);
 
@@ -88,23 +86,25 @@ namespace Ex03.ConsoleUI
             }
         }
 
-        public eRepairStatus GetVehicleRepairStatusFromInput()
+        internal eRepairStatus VehicleRepairStatusInput()
         {
             eRepairStatus repairStatus;
-            Console.WriteLine(string.Format(@"Please choose one of the following options:
+            Console.WriteLine(string.Format(
+                @"{0}Please choose one of the following options:
 1. In Repair
 2. Repaired
-3. Paid For"));
+3. Paid For", Environment.NewLine));
 
             string repairStatusInput = Console.ReadLine();
 
             while (!Enum.TryParse(repairStatusInput, out repairStatus) ||
                    !Enum.IsDefined(typeof(eRepairStatus), repairStatus))
             {
-                Console.WriteLine(string.Format(@"Invalid status entered, Please try again:
+                Console.WriteLine(string.Format(
+                    @"{0}Invalid status entered, Please try again:
 1. In Repair
 2. Repaired
-3. Paid For"));
+3. Paid For",Environment.NewLine));
 
                 repairStatusInput = Console.ReadLine();
             }
@@ -112,9 +112,9 @@ namespace Ex03.ConsoleUI
             return repairStatus;
         }
 
-        public string VehicleLicenseNumberInput()
+        internal string VehicleLicenseNumberInput()
         {
-            Console.WriteLine("Please enter the vehicle's license number");
+            Console.WriteLine("Please enter the vehicle's license number:");
 
             string vehicleLicenseNumberInput = Console.ReadLine();
 
@@ -131,22 +131,24 @@ namespace Ex03.ConsoleUI
         {
             eVehicleInfoOptions vehicleInfoOption;
 
-            Console.WriteLine(string.Format(@"Please select one of the following options:
+            Console.WriteLine(string.Format(
+                @"{0}Please select one of the following options:
 1. Get information about a vehicle.
 2. Get all vehicle licenses with a repair status in the garage.
 3. Get all vehicle licenses in the garage.
-4. Return to main menu."));
+4. Return to main menu.",Environment.NewLine));
 
             string optionInput = Console.ReadLine();
 
             while (!Enum.TryParse(optionInput, out vehicleInfoOption) ||
                    !Enum.IsDefined(typeof(eVehicleInfoOptions), vehicleInfoOption))
             {
-                Console.WriteLine(string.Format(@"Invalid option entered, Please try again:
+                Console.WriteLine(string.Format(
+                    @"{0}Invalid option entered, Please try again:
 1. Get information about a vehicle.
 2. Get all vehicle licenses with a repair status in the garage.
 3. Get all vehicle licenses in the garage.
-4. Return to main menu."));
+4. Return to main menu.", Environment.NewLine));
 
                 optionInput = Console.ReadLine();
             }
@@ -155,4 +157,3 @@ namespace Ex03.ConsoleUI
         }
     }
 }
-
