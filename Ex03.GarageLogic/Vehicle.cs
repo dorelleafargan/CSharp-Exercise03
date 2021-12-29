@@ -38,34 +38,33 @@ namespace Ex03.GarageLogic
 
         internal string LicenseNumber
         {
-            get { return r_LicensePlateNumber;}
+            get { return r_LicensePlateNumber; }
         }
 
         internal eRepairStatus RepairStatus
         {
-            get { return m_VehicleRepairStatus;}
+            get { return m_VehicleRepairStatus; }
             set { m_VehicleRepairStatus = value; }
         }
 
         internal string OwnerName
         {
-            get { return m_OwnerName;}
-            set { m_OwnerName= value;}
+            get { return m_OwnerName; }
+            set { m_OwnerName = value; }
         }
 
         internal string OwnerPhoneNumber
         {
-            get { return m_OwnerPhoneNumber;}
-            set { m_OwnerPhoneNumber = value;}
+            get { return m_OwnerPhoneNumber; }
+            set { m_OwnerPhoneNumber = value; }
         }
 
         internal float EnergyLevel
         {
             get { return m_EnergyLevelPercentage; }
-
         }
 
-        internal abstract void NewEngine(float i_CurrentAmoutOfEnerg);
+        internal abstract void NewEngine(float i_CurrentAmountOfEnergy);
 
         protected void SetEngine(eEngineType i_EngineType, float i_CurrentAmountOfEnergy, float i_MaxAmountOfEnergy)
         {
@@ -87,7 +86,7 @@ namespace Ex03.GarageLogic
 
         protected void SetWheels(string i_Manufacturer, float i_CurrentTirePressure, float i_MaxTirePressure, int i_NumberOfWheels)
         {
-            for(int i =0; i < i_NumberOfWheels; i++)
+            for (int i =0; i < i_NumberOfWheels; i++)
             {
                 r_Wheels.Add(new Wheels(i_Manufacturer, i_MaxTirePressure) { TirePressure = i_CurrentTirePressure });
             }

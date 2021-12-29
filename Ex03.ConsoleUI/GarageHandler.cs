@@ -11,7 +11,7 @@ namespace Ex03.ConsoleUI
         private readonly ChangeVehicleUI r_ChangeVehicleUI;
         private readonly VehicleInfoUI r_VehicleInfoUI;
 
-        private enum eOptions
+        private enum eMainMenuOptions
         {
             InsertVehicle = 1,
             ChangeVehicle = 2,
@@ -33,16 +33,16 @@ namespace Ex03.ConsoleUI
             garageMenu();
         }
 
-        private eOptions getInput()
+        private eMainMenuOptions getInput()
         {
-            eOptions garageOption;
+            eMainMenuOptions garageOption;
             Console.WriteLine(string.Format(@"Choose one of the following options:
 1. Enter a new Vehicle.
 2. Change Vehicle Information.
 3. Get vehicle information. (By license number)
 "));
             string optionsInput = Console.ReadLine();
-            while (!Enum.TryParse(optionsInput, out garageOption) || !Enum.IsDefined(typeof(eOptions), garageOption))
+            while (!Enum.TryParse(optionsInput, out garageOption) || !Enum.IsDefined(typeof(eMainMenuOptions), garageOption))
             {
                 Console.WriteLine(string.Format(@"Invalid option, choose again from the following:
 1. Enter a new Vehicle.
@@ -60,22 +60,22 @@ namespace Ex03.ConsoleUI
             while (true)
             {
                 Console.WriteLine(string.Format("Main Menu:{0}", Environment.NewLine));
-                eOptions garageOption = getInput();
+                eMainMenuOptions garageOption = getInput();
                 switch (garageOption)
                 {
-                    case eOptions.InsertVehicle:
+                    case eMainMenuOptions.InsertVehicle:
                         {
                             r_InsertVehicleUI.InsertNewVehicle();
                             break;
                         }
 
-                    case eOptions.ChangeVehicle:
+                    case eMainMenuOptions.ChangeVehicle:
                         {
                             r_ChangeVehicleUI.ChangeVehicleMenu();
                             break;
                         }
 
-                    case eOptions.VehicleInfo:
+                    case eMainMenuOptions.VehicleInfo:
                         {
                             r_VehicleInfoUI.VehicleInfoMenu();
                             break;
@@ -89,9 +89,9 @@ namespace Ex03.ConsoleUI
             }
         }
 
-        private eOptions validOptionInput()
+        private eMainMenuOptions validOptionInput()
         {
-            eOptions option;
+            eMainMenuOptions option;
             Console.WriteLine(string.Format(@"Please choose one of the following options:
 1. Enter a new vehicle
 2. Change a vehicle attribute
@@ -99,7 +99,7 @@ namespace Ex03.ConsoleUI
 
             string optioninput = Console.ReadLine();
 
-            while (!Enum.TryParse(optioninput, out option) || !Enum.IsDefined(typeof(eOptions), option))
+            while (!Enum.TryParse(optioninput, out option) || !Enum.IsDefined(typeof(eMainMenuOptions), option))
             {
                 Console.WriteLine(string.Format(@"Invalid option, please try again:
 1. Enter a new vehicle

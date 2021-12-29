@@ -35,9 +35,9 @@ namespace Ex03.ConsoleUI
             {
                 Console.WriteLine(string.Format("Change Vehicle Information menu:{0}", Environment.NewLine));
 
-                eChangeVehicleMenuOptions changeOptions = changeVehicleInfoMenu();
+                eChangeVehicleMenuOptions changeMainMenuOptions = changeVehicleInfoMenu();
 
-                switch (changeOptions)
+                switch (changeMainMenuOptions)
                 {
                     case eChangeVehicleMenuOptions.ChangeStatus:
                         {

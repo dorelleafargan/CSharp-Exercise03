@@ -99,9 +99,9 @@
             i_Motorcycle.EngineVolume = i_EngineVolume;
         }
 
-        public void SetTruckAttributes(Truck i_Truck, bool i_isCargoRefrigirated, float i_CargoVolume)
+        public void SetTruckAttributes(Truck i_Truck, bool i_IsCargoRefrigirated, float i_CargoVolume)
         {
-            i_Truck.IsContentRefgirated = i_isCargoRefrigirated;
+            i_Truck.IsContentRefgirated = i_IsCargoRefrigirated;
             i_Truck.CargoVolume = i_CargoVolume;
         }
 

@@ -15,9 +15,9 @@
             return k_MaxFuelAmount;
         }
 
-        internal override void NewEngine(float i_CurrentAmoutOfEnergy)
+        internal override void NewEngine(float i_CurrentAmountOfEnergy)
         {
-            SetEngine(eEngineType.FuelBased, i_CurrentAmoutOfEnergy, k_MaxFuelAmount);
+            SetEngine(eEngineType.FuelBased, i_CurrentAmountOfEnergy, k_MaxFuelAmount);
             SetEngineFuelType(k_FuelType);
         }
     }

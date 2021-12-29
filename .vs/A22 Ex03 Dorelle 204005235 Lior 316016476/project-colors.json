@@ -1,0 +1,16 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "16638bfb-0d29-411c-974c-374d98969e88": {
+      "ProjectGuid": "16638bfb-0d29-411c-974c-374d98969e88",
+      "DisplayName": "Ex03.GarageLogic",
+      "ColorIndex": 0
+    },
+    "afddddfa-e2d1-414b-b06d-ac0671fe88c4": {
+      "ProjectGuid": "afddddfa-e2d1-414b-b06d-ac0671fe88c4",
+      "DisplayName": "Ex03.ConsoleUI",
+      "ColorIndex": 1
+    }
+  },
+  "NextColorIndex": 2
+}

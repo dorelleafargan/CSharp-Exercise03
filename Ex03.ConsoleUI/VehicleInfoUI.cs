@@ -7,7 +7,7 @@ namespace Ex03.ConsoleUI
 {
     internal class VehicleInfoUI
     {
-        private enum eVehicleInfoOptions
+        private enum eVehicleInfoMenuOptions
         {
             GetVehicleInfo = 1,
             GetAllVehiclesLicensesWithRepairStatus = 2,
@@ -26,11 +26,11 @@ namespace Ex03.ConsoleUI
         {
             Console.WriteLine(string.Format(@"{0}Info menu:{1}", Environment.NewLine, Environment.NewLine));
 
-            eVehicleInfoOptions infoOption = vehicleInfoOptionInput();
+            eVehicleInfoMenuOptions infoOption = vehicleInfoOptionInput();
 
             switch (infoOption)
             {
-                case eVehicleInfoOptions.GetVehicleInfo:
+                case eVehicleInfoMenuOptions.GetVehicleInfo:
                     {
                         try
                         {
@@ -49,7 +49,7 @@ namespace Ex03.ConsoleUI
                         break;
                     }
 
-                case eVehicleInfoOptions.GetAllVehiclesLicensesWithRepairStatus:
+                case eVehicleInfoMenuOptions.GetAllVehiclesLicensesWithRepairStatus:
                     {
                         eRepairStatus repairStatus = VehicleRepairStatusInput();
 
@@ -60,7 +60,7 @@ namespace Ex03.ConsoleUI
                         break;
                     }
 
-                case eVehicleInfoOptions.GetAllVehiclesLicenses:
+                case eVehicleInfoMenuOptions.GetAllVehiclesLicenses:
                     {
                         StringBuilder allVehiclesLicensesStringBuilder = new StringBuilder();
 
@@ -74,7 +74,7 @@ namespace Ex03.ConsoleUI
                         break;
                     }
 
-                case eVehicleInfoOptions.MainMenu:
+                case eVehicleInfoMenuOptions.MainMenu:
                     {
                         break;
                     }
@@ -127,9 +127,9 @@ namespace Ex03.ConsoleUI
             return vehicleLicenseNumberInput;
         }
 
-        private eVehicleInfoOptions vehicleInfoOptionInput()
+        private eVehicleInfoMenuOptions vehicleInfoOptionInput()
         {
-            eVehicleInfoOptions vehicleInfoOption;
+            eVehicleInfoMenuOptions vehicleInfoOption;
 
             Console.WriteLine(string.Format(
                 @"{0}Please select one of the following options:
@@ -141,7 +141,7 @@ namespace Ex03.ConsoleUI
             string optionInput = Console.ReadLine();
 
             while (!Enum.TryParse(optionInput, out vehicleInfoOption) ||
-                   !Enum.IsDefined(typeof(eVehicleInfoOptions), vehicleInfoOption))
+                   !Enum.IsDefined(typeof(eVehicleInfoMenuOptions), vehicleInfoOption))
             {
                 Console.WriteLine(string.Format(
                     @"{0}Invalid option entered, Please try again:

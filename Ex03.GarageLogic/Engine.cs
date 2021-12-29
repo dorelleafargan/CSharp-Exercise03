@@ -110,11 +110,11 @@ namespace Ex03.GarageLogic
             }
         }
 
-        internal void Recharge(float i_HoursAmountTORecharge)
+        internal void Recharge(float i_HoursAmountToRecharge)
         {
             if (r_EngineType == eEngineType.ElectricBased)
             {
-                reEnergize(i_HoursAmountTORecharge);
+                reEnergize(i_HoursAmountToRecharge);
             }
             else
             {

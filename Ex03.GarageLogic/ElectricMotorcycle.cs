@@ -14,9 +14,9 @@
             return k_MaxTimeOfRechargedBattery;
         }
 
-        internal override void NewEngine(float i_CurrentAmoutOfEnergy)
+        internal override void NewEngine(float i_CurrentAmountOfEnergy)
         {
-            SetEngine(eEngineType.ElectricBased, i_CurrentAmoutOfEnergy, k_MaxTimeOfRechargedBattery);
+            SetEngine(eEngineType.ElectricBased, i_CurrentAmountOfEnergy, k_MaxTimeOfRechargedBattery);
         }
     }
 }
